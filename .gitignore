@@ -52,3 +52,4 @@ node_modules/
 
 demo/vendor.min.css
 demo/vendor.min.js
+demo/angular-bootstrap-select.js

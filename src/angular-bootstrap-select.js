@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('angular-bootstrap-select')
+        .module('angular-bootstrap-select', [])
         .directive('bootstrapSelect', bootstrapSelect);
 
     bootstrapSelect.$inject = [];

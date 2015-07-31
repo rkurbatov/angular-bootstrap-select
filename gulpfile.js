@@ -35,8 +35,10 @@ function deployVendor(production) {
     gulp.src(vendorStyles)
         .pipe(concat('vendor.min.css'))
         .pipe(uglifycss())
-        .pipe(gulp.dest('demo/'));
+        .pipe(gulp.dest('demo'));
 
+    gulp.src('src/angular-bootstrap-select.js')
+        .pipe(gulp.dest('demo'))
 }
 
 function deployCustom() {
