@@ -1,0 +1,29 @@
+{
+  "name": "angular-bootstrap-select",
+  "version": "0.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rkurbatov/angular-bootstrap-select.git"
+  },
+  "keywords": [
+    "angular",
+    "bootstrap-select"
+  ],
+  "author": "Roman Kurbatov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rkurbatov/angular-bootstrap-select/issues"
+  },
+  "devDependencies": {
+    "gulp": "~3.9.0",
+    "gulp-concat": "~2.6.0",
+    "gulp-uglify": "~1.2.0",
+    "gulp-uglifycss": "~1.0.4",
+    "gulp-if": "~1.2.5"
+  }
+}
