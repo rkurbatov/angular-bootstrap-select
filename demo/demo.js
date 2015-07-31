@@ -5,10 +5,32 @@
         .module('absDemo', [
             'angular-bootstrap-select'
         ])
-        .controller('absDemoCtrl', absDemo);
+        .controller('absDemoCtrl', absDemoController);
 
-    function absDemo() {
+    function absDemoController() {
+        var vm = this;
 
+        vm.options = [
+            {
+                label: 'Красный',
+                value: 'red',
+                content: '<span style="color:red">Красный</span>'
+            },
+            {
+                label: 'Оранжевый',
+                value: 'orange'
+            },
+            {
+                label: 'Жёлтый',
+                value: 'yellow'
+            },
+            {
+                label: 'Зелёный',
+                value: 'green'
+            }
+        ];
+
+        vm.selection = ['red', 'green'];
     }
 
 })(window, window.angular);

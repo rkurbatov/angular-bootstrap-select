@@ -1,5 +1,5 @@
 // directive to data communication with bootstrap selectors
-;(function (window, angular, undefined) {
+(function (window, angular, undefined) {
     'use strict';
 
     angular
@@ -10,12 +10,13 @@
 
     function bootstrapSelect() {
         var ddo = {
-            restrict: 'A',
+            restrict: 'E',
+            templateUrl: 'angular-bootstrap-select.tpl.html',
             scope: {
-                htmlContent: '=',
-                content: '=',
+                options: '=',
                 selection: '=',
-                execOnChange: '&'
+                onChange: '&',
+                multiple: '@'
             },
             link: link
         };
@@ -23,54 +24,55 @@
         return ddo;
 
         function link(scope, elm, attrs) {
-            // fill selector
-            scope.$watch(
-                function () {
-                    return scope.htmlContent;
-                },
-                function (newV) {
-                    if (newV) {
-                        elm.html(scope.htmlContent).selectpicker('refresh');
-                    }
-                }
-            );
+            var select = elm.find('select');
 
-            scope.$watch(
-                function () {
-                    return scope.content;
-                },
-                function (newV) {
-                    if (newV) {
-                        elm.html(arrToOptions(scope.content)).selectpicker('refresh');
-                    }
-                }
-            );
+            scope.getContent = getContent;
 
-            // clear if selection is empty
-            scope.$watch(
-                function () {
-                    return scope.selection;
-                },
-                function (newV) {
-                    if (angular.isArray(newV) && !newV.length) {
-                        elm.selectpicker('deselectAll');
-                    }
-                }
-            );
+            initDirective();
 
-            // get selection on change
-            elm.on('change', function (evt) {
-                scope.$apply(function(){
-                    scope.selection = elm.val() || [];
+            function initDirective() {
+
+                scope.$watch('options', refresh);
+                scope.$watch('selection', updateSelection);
+                select.on('change', modelChanged);
+
+                // multiple selection
+                if (attrs.multiple || attrs.multiple === '') {
+                    select.attr('multiple', 'true');
+                }
+
+            }
+
+            function refresh(newVal) {
+                scope.$applyAsync(function () {
+                    select.selectpicker('refresh');
                 });
-                scope.execOnChange();
-            });
-        }
+            }
 
-        function arrToOptions(arr) {
-            return arr.map(function (v) {
-                return '<option value="' + v + '">' + v + '</option>';
-            }).join('');
+            function updateSelection(newVal, oldVal) {
+                scope.$applyAsync(function () {
+                    select.selectpicker('val', scope.selection);
+                });
+            }
+
+            function modelChanged() {
+                var newSelection = [];
+                var options = select[0].options;
+                if (options && options.length) {
+                    for (var i = 0; i < options.length; i++) {
+                        if (options[i].selected) {
+                            newSelection.push(options[i].value);
+                        }
+                    }
+                }
+                scope.$applyAsync(function () {
+                    scope.selection = newSelection;
+                });
+            }
+
+            function getContent(content) {
+                return content;
+            }
         }
 
     }

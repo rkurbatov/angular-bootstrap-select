@@ -3,10 +3,12 @@ var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var concat = require('gulp-concat');
 var gulpif = require('gulp-if');
+var angularTemplates = require('gulp-angular-templates');
+var sq = require('streamqueue');
 
 gulp.task('default', ['buildDevel']);
 
-gulp.task('buildDevel', function(){
+gulp.task('buildDevel', function () {
     deployVendor();
     deployCustom();
 });
@@ -37,8 +39,19 @@ function deployVendor(production) {
         .pipe(uglifycss())
         .pipe(gulp.dest('demo'));
 
-    gulp.src('src/angular-bootstrap-select.js')
-        .pipe(gulp.dest('demo'))
+    var sources = gulp.src('src/**/*.js');
+
+    var templates = gulp.src('templates/**/*.html')
+        .pipe(angularTemplates({
+            module: 'angular-bootstrap-select',
+            standalone: false
+        }));
+
+    sq({objectMode: true}, sources, templates)
+        .pipe(concat('angular-bootstrap-select-tpls.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('build'));
+
 }
 
 function deployCustom() {

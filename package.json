@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-select",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
@@ -24,6 +24,8 @@
     "gulp-concat": "~2.6.0",
     "gulp-uglify": "~1.2.0",
     "gulp-uglifycss": "~1.0.4",
-    "gulp-if": "~1.2.5"
+    "gulp-if": "~1.2.5",
+    "gulp-angular-templates": "0.0.2",
+    "event-stream": "~3.3.1"
   }
 }

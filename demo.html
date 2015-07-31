@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>angular-bootstrap-select demo</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="demo/vendor.min.css">
+    <script src="demo/vendor.min.js"></script>
+    <script src="build/angular-bootstrap-select-tpls.min.js"></script>
+    <script src="demo/demo.js"></script>
+</head>
+<body ng-app="absDemo">
+<div ng-controller="absDemoCtrl as abs">
+    <bootstrap-select options="abs.options"
+                      selection="abs.selection"
+                      multiple>
+    </bootstrap-select>
+</div>
+</body>
+</html>
