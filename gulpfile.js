@@ -1,10 +1,12 @@
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
+var rename = require('gulp-rename');
 var concat = require('gulp-concat');
 var gulpif = require('gulp-if');
 var angularTemplates = require('gulp-angular-templates');
 var sq = require('streamqueue');
+
 
 gulp.task('default', ['buildDevel']);
 
@@ -48,9 +50,11 @@ function deployVendor(production) {
         }));
 
     sq({objectMode: true}, sources, templates)
-        .pipe(concat('angular-bootstrap-select-tpls.min.js'))
+        .pipe(concat('angular-bootstrap-select-tpls.js'))
+        .pipe(gulp.dest('dist'))
         .pipe(uglify())
-        .pipe(gulp.dest('build'));
+        .pipe(rename({extname: '.min.js'}))
+        .pipe(gulp.dest('dist'));
 
 }
 
