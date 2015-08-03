@@ -41,10 +41,15 @@
                     select.attr('multiple', 'true');
                 }
 
+                if (attrs.width) {
+                    select.attr('width', attrs.width);
+                }
+
             }
 
             function refresh(newVal) {
                 scope.$applyAsync(function () {
+                    select.selectpicker('val', scope.selection);
                     select.selectpicker('refresh');
                 });
             }
@@ -80,5 +85,5 @@
 })(window, window.angular);
 angular.module('angular-bootstrap-select').run(['$templateCache', function($templateCache) {
     $templateCache.put('angular-bootstrap-select.tpl.html',
-        "<select class=\"selectpicker\">\n    <option ng-repeat=\"option in options\"\n            ng-model=\"selection\"\n            ng-attr-data-content=\"{{ getContent(option.content) }}\"\n            value=\"{{ option.value }}\">\n        {{:: option.label }}\n    </option>\n</select>");
+        "<select class=\"selectpicker\">\n    <option ng-repeat=\"option in options\"\n            ng-model=\"selection\"\n            ng-attr-data-content=\"{{ getContent(option.content) }}\"\n            value=\"{{ option.value }}\">\n        {{ option.text }}\n    </option>\n</select>");
 }]);
