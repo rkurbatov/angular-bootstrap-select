@@ -41,10 +41,15 @@
                     select.attr('multiple', 'true');
                 }
 
+                if (attrs.width) {
+                    select.attr('width', attrs.width);
+                }
+
             }
 
             function refresh(newVal) {
                 scope.$applyAsync(function () {
+                    select.selectpicker('val', scope.selection);
                     select.selectpicker('refresh');
                 });
             }
