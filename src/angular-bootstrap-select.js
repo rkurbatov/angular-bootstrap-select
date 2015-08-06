@@ -15,7 +15,7 @@
             scope: {
                 options: '=',
                 selection: '=',
-                onChange: '&',
+                changeCallback: '&',
                 multiple: '@'
             },
             link: link
@@ -25,8 +25,6 @@
 
         function link(scope, elm, attrs) {
             var select = elm.find('select');
-
-            scope.getContent = getContent;
 
             initDirective();
 
@@ -49,7 +47,6 @@
 
             function refresh(newVal) {
                 scope.$applyAsync(function () {
-                    select.selectpicker('val', scope.selection);
                     select.selectpicker('refresh');
                 });
             }
@@ -57,6 +54,7 @@
             function updateSelection(newVal, oldVal) {
                 scope.$applyAsync(function () {
                     select.selectpicker('val', scope.selection);
+                    scope.changeCallback();
                 });
             }
 
@@ -73,10 +71,6 @@
                 scope.$applyAsync(function () {
                     scope.selection = newSelection;
                 });
-            }
-
-            function getContent(content) {
-                return content;
             }
         }
 

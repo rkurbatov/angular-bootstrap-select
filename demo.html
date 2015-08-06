@@ -12,6 +12,7 @@
 <div ng-controller="absDemoCtrl as abs">
     <bootstrap-select options="abs.options"
                       selection="abs.selection"
+                      change-callback="abs.change()"
                       multiple>
     </bootstrap-select>
 </div>

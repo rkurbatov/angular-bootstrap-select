@@ -12,25 +12,31 @@
 
         vm.options = [
             {
-                label: 'Красный',
+                subtext: 'Красный',
                 value: 'red',
                 content: '<span style="color:red">Красный</span>'
             },
             {
-                label: 'Оранжевый',
+                text: 'Оранжевый',
                 value: 'orange'
             },
             {
-                label: 'Жёлтый',
+                text: 'Жёлтый',
+                subtext: 'цвет',
                 value: 'yellow'
             },
             {
-                label: 'Зелёный',
+                icon: 'glyphicon glyphicon-envelope',
+                subtext: 'Зелёный',
                 value: 'green'
             }
         ];
 
         vm.selection = ['red', 'green'];
+
+        vm.change = function () {
+            console.log(vm.selection);
+        }
     }
 
 })(window, window.angular);

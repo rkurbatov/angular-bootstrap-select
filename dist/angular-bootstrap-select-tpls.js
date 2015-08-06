@@ -15,7 +15,7 @@
             scope: {
                 options: '=',
                 selection: '=',
-                onChange: '&',
+                changeCallback: '&',
                 multiple: '@'
             },
             link: link
@@ -25,8 +25,6 @@
 
         function link(scope, elm, attrs) {
             var select = elm.find('select');
-
-            scope.getContent = getContent;
 
             initDirective();
 
@@ -49,7 +47,6 @@
 
             function refresh(newVal) {
                 scope.$applyAsync(function () {
-                    select.selectpicker('val', scope.selection);
                     select.selectpicker('refresh');
                 });
             }
@@ -57,6 +54,7 @@
             function updateSelection(newVal, oldVal) {
                 scope.$applyAsync(function () {
                     select.selectpicker('val', scope.selection);
+                    scope.changeCallback();
                 });
             }
 
@@ -74,10 +72,6 @@
                     scope.selection = newSelection;
                 });
             }
-
-            function getContent(content) {
-                return content;
-            }
         }
 
     }
@@ -85,5 +79,5 @@
 })(window, window.angular);
 angular.module('angular-bootstrap-select').run(['$templateCache', function($templateCache) {
     $templateCache.put('angular-bootstrap-select.tpl.html',
-        "<select class=\"selectpicker\">\n    <option ng-repeat=\"option in options\"\n            ng-model=\"selection\"\n            ng-attr-data-content=\"{{ getContent(option.content) }}\"\n            value=\"{{ option.value }}\">\n        {{ option.text }}\n    </option>\n</select>");
+        "<select class=\"selectpicker\">\n    <option ng-repeat=\"option in options\"\n            ng-bind=\"option.text\"\n            ng-attr-data-content=\"{{ option.content }}\"\n            ng-attr-data-subtext=\"{{ option.subtext }}\"\n            ng-attr-data-icon=\"{{ option.icon }}\"\n            value=\"{{ option.value }}\">\n    </option>\n</select>");
 }]);

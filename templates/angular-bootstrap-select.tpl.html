@@ -1,8 +1,9 @@
 <select class="selectpicker">
     <option ng-repeat="option in options"
-            ng-model="selection"
-            ng-attr-data-content="{{ getContent(option.content) }}"
+            ng-bind="option.text"
+            ng-attr-data-content="{{ option.content }}"
+            ng-attr-data-subtext="{{ option.subtext }}"
+            ng-attr-data-icon="{{ option.icon }}"
             value="{{ option.value }}">
-        {{ option.text }}
     </option>
 </select>
