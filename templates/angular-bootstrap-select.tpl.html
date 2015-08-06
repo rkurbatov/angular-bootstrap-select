@@ -1,9 +1,11 @@
 <select class="selectpicker">
-    <option ng-repeat="option in options"
-            ng-bind="option.text"
-            ng-attr-data-content="{{ option.content }}"
-            ng-attr-data-subtext="{{ option.subtext }}"
-            ng-attr-data-icon="{{ option.icon }}"
-            value="{{ option.value }}">
-    </option>
+    <optgroup ng-repeat="optgroup in optgroups" label="{{ optgroup.label }}">
+        <option ng-repeat="option in optgroup.options"
+                ng-bind="option.text"
+                ng-attr-data-content="{{ option.content }}"
+                ng-attr-data-subtext="{{ option.subtext }}"
+                ng-attr-data-icon="{{ option.icon }}"
+                value="{{ option.value }}">
+        </option>
+    </optgroup>
 </select>

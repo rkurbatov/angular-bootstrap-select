@@ -13,10 +13,11 @@
             restrict: 'E',
             templateUrl: 'angular-bootstrap-select.tpl.html',
             scope: {
-                options: '=',
+                data: '=',
                 selection: '=',
                 changeCallback: '&',
-                multiple: '@'
+                multiple: '@',
+                simple: '@'
             },
             link: link
         };
@@ -25,14 +26,20 @@
 
         function link(scope, elm, attrs) {
             var select = elm.find('select');
+            var isSimple;
 
             initDirective();
 
             function initDirective() {
 
-                scope.$watch('options', refresh);
+                scope.optgroups = [];
+
+                scope.$watch('data', dataChanged);
+
+                // selection changed outside
                 scope.$watch('selection', updateSelection);
-                select.on('change', modelChanged);
+                // selection changed on select element
+                select.on('change', selectionChanged);
 
                 // multiple selection
                 if (attrs.multiple || attrs.multiple === '') {
@@ -43,12 +50,29 @@
                     select.attr('width', attrs.width);
                 }
 
+                isSimple = attrs.simple || attrs.simple === '';
+
             }
 
-            function refresh(newVal) {
+            function dataChanged(newVal) {
+                if (isSimple) {
+                    scope.optgroups.length = 0;
+                    scope.optgroups.push({
+                        label: '',
+                        options: newVal
+                    });
+                } else {
+                    scope.optgroups.length = 0;
+                    newVal.forEach(function(v){
+                        scope.optgroups.push(v);
+                    });
+                }
+
                 scope.$applyAsync(function () {
                     select.selectpicker('refresh');
                 });
+
+                if (!isSimple) console.log(select);
             }
 
             function updateSelection(newVal, oldVal) {
@@ -58,7 +82,7 @@
                 });
             }
 
-            function modelChanged() {
+            function selectionChanged() {
                 var newSelection = [];
                 var options = select[0].options;
                 if (options && options.length) {
@@ -79,5 +103,5 @@
 })(window, window.angular);
 angular.module('angular-bootstrap-select').run(['$templateCache', function($templateCache) {
     $templateCache.put('angular-bootstrap-select.tpl.html',
-        "<select class=\"selectpicker\">\n    <option ng-repeat=\"option in options\"\n            ng-bind=\"option.text\"\n            ng-attr-data-content=\"{{ option.content }}\"\n            ng-attr-data-subtext=\"{{ option.subtext }}\"\n            ng-attr-data-icon=\"{{ option.icon }}\"\n            value=\"{{ option.value }}\">\n    </option>\n</select>");
+        "<select class=\"selectpicker\">\n    <optgroup ng-repeat=\"optgroup in optgroups\" label=\"{{ optgroup.label }}\">\n        <option ng-repeat=\"option in optgroup.options\"\n                ng-bind=\"option.text\"\n                ng-attr-data-content=\"{{ option.content }}\"\n                ng-attr-data-subtext=\"{{ option.subtext }}\"\n                ng-attr-data-icon=\"{{ option.icon }}\"\n                value=\"{{ option.value }}\">\n        </option>\n    </optgroup>\n</select>");
 }]);

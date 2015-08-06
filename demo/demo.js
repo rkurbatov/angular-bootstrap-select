@@ -1,4 +1,4 @@
-(function(window, angular, undefined){
+(function (window, angular, undefined) {
     'use strict';
 
     angular
@@ -32,10 +32,23 @@
             }
         ];
 
-        vm.selection = ['red', 'green'];
+        vm.complex = [
+            {label: 'first', options: vm.options},
+            {
+                label: 'second',
+                options: [
+                    {text: 'Фиолетовый', value: 'violet'},
+                    {icon: 'glyphicon glyphicon-star', subtext: 'звезда', value: 'star'}
+                ]
+            }
+        ];
+
+        vm.selection1 = ['red', 'green'];
+        vm.selection2 = ['yellow', 'green'];
 
         vm.change = function () {
-            console.log(vm.selection);
+            console.log(vm.selection1);
+            console.log(vm.selection2);
         }
     }
 
