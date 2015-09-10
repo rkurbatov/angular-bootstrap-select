@@ -41,7 +41,7 @@
                 // selection changed on select element
                 select.on('change', selectionChanged);
 
-                scope.on('$destroy', function(){
+                scope.$on('$destroy', function(){
                     select.selectpicker('destroy');
                     select.off('change', selectionChanged);
                 });
