@@ -17,7 +17,7 @@
                 selection: '=',
                 changeCallback: '&',
                 multiple: '@',
-                simple: '@'
+                simple: '@',
             },
             link: link
         };
@@ -41,6 +41,11 @@
                 // selection changed on select element
                 select.on('change', selectionChanged);
 
+                scope.on('$destroy', function(){
+                    select.selectpicker('destroy');
+                    select.off('change', selectionChanged);
+                });
+
                 // multiple selection
                 if (attrs.multiple || attrs.multiple === '') {
                     select.attr('multiple', 'true');
@@ -50,8 +55,15 @@
                     select.attr('width', attrs.width);
                 }
 
-                isSimple = attrs.simple || attrs.simple === '';
+                if (attrs.title) {
+                    select.attr('title', attrs.title);
+                }
 
+                if (attrs.mobile) {
+                    select.selectpicker('mobile');
+                }
+
+                isSimple = attrs.simple || attrs.simple === '';
             }
 
             function dataChanged(newVal) {
