@@ -17,7 +17,7 @@
                 selection: '=',
                 changeCallback: '&',
                 multiple: '@',
-                simple: '@',
+                simple: '@'
             },
             link: link
         };
