@@ -1,4 +1,7 @@
 var gulp = require('gulp');
+var bump = require('gulp-bump');
+var git = require('gulp-git');
+var excludeGitignore = require('gulp-exclude-gitignore');
 var uglify = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var rename = require('gulp-rename');
@@ -12,11 +15,13 @@ gulp.task('default', ['buildDevel']);
 
 gulp.task('buildDevel', function () {
     deployVendor();
-    deployCustom();
 });
 
+gulp.task('bumpMajor', bumpVersion('major'));
+gulp.task('bumpMinor', bumpVersion('minor'));
+gulp.task('bumpPatch', bumpVersion('patch'));
+
 gulp.task('deployVendor', deployVendor);
-gulp.task('deployCustom', deployCustom);
 
 function deployVendor(production) {
     var vendorLibs = [
@@ -58,6 +63,11 @@ function deployVendor(production) {
 
 }
 
-function deployCustom() {
-
+function bumpVersion(bumpType) {
+    return function () {
+        gulp.src(['./package.json', './bower.json'])
+            .pipe(bump({type: bumpType}))
+            .pipe(gulp.dest('./'))
+            .pipe(git.commit("Bump package version"));
+    }
 }

@@ -75,7 +75,7 @@
                     });
                 } else {
                     scope.optgroups.length = 0;
-                    newVal.forEach(function(v){
+                    (newVal || []).forEach(function(v){
                         scope.optgroups.push(v);
                     });
                 }
@@ -85,7 +85,7 @@
                 });
             }
 
-            function updateSelection(newVal, oldVal) {
+            function updateSelection() {
                 scope.$applyAsync(function () {
                     select.selectpicker('val', scope.selection);
                     scope.changeCallback();
