@@ -10,16 +10,17 @@
 </head>
 <body ng-app="absDemo">
 <div ng-controller="absDemoCtrl as abs">
-    <bootstrap-select data="abs.options"
+    <bootstrap-select options="abs.options"
                       selection="abs.selection1"
                       change-callback="abs.change()"
                       simple
                       multiple>
     </bootstrap-select>
-    <bootstrap-select data="abs.complex"
-                      selection="abs.selection2"
-                      multiple>
-    </bootstrap-select>
+    <select bootstrap-select
+            options="abs.complex"
+            selection="abs.selection2"
+            multiple>
+    </select>
 </div>
 </body>
 </html>
